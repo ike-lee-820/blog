@@ -6,8 +6,6 @@ import { url } from "@utils/url-utils.ts";
 import { onMount } from "svelte";
 import type { SearchResult } from "@/global";
 
-export let __clientOnly?: string;
-
 let keywordDesktop = "";
 let keywordMobile = "";
 let result: SearchResult[] = [];
@@ -114,16 +112,15 @@ onMount(() => {
 			console.warn(
 				"Pagefind load error event received. Search functionality will be limited.",
 			);
-			initializeSearch(); // Initialize with pagefindLoaded as false
+			initializeSearch();
 		});
 
-		// Fallback in case events are not caught or pagefind is already loaded by the time this script runs
 		setTimeout(() => {
 			if (!initialized) {
 				console.log("Fallback: Initializing search after timeout.");
 				initializeSearch();
 			}
-		}, 2000); // Adjust timeout as needed
+		}, 2000);
 	}
 });
 
@@ -140,7 +137,6 @@ $: if (initialized && keywordMobile) {
 }
 </script>
 
-<!-- search bar for desktop view -->
 <div id="search-bar" class="hidden lg:flex transition-all items-center h-11 mr-2 rounded-lg
       bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
@@ -152,17 +148,14 @@ $: if (initialized && keywordMobile) {
     >
 </div>
 
-<!-- toggle btn for phone/tablet view -->
 <button on:click={togglePanel} aria-label="Search Panel" id="search-switch"
         class="btn-plain scale-animation lg:!hidden rounded-lg w-11 h-11 active:scale-90">
     <Icon icon="material-symbols:search" class="text-[1.25rem]"></Icon>
 </button>
 
-<!-- search panel -->
 <div id="search-panel" class="float-panel float-panel-closed search-panel absolute md:w-[30rem]
 top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2">
 
-    <!-- search bar inside panel for phone/tablet -->
     <div id="search-bar-inside" class="flex relative lg:hidden transition-all items-center h-11 rounded-xl
       bg-black/[0.04] hover:bg-black/[0.06] focus-within:bg-black/[0.06]
       dark:bg-white/5 dark:hover:bg-white/10 dark:focus-within:bg-white/10
@@ -174,7 +167,6 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2">
         >
     </div>
 
-    <!-- search results -->
     {#each result as item}
         <a href={item.url}
            class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block
