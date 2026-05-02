@@ -6,6 +6,8 @@ import { url } from "@utils/url-utils.ts";
 import { onMount } from "svelte";
 import type { SearchResult } from "@/global";
 
+let props: Record<string, never> = $props();
+
 let keywordDesktop = "";
 let keywordMobile = "";
 let result: SearchResult[] = [];
