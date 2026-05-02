@@ -5,10 +5,17 @@ import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { getPostUrlBySlug } from "../utils/url-utils";
 
-let props: Record<string, never> = $props();
-export let tags: string[] = [];
-export let categories: string[] = [];
-export let sortedPosts: PostForList[] = [];
+interface Props {
+	tags?: string[];
+	categories?: string[];
+	sortedPosts?: PostForList[];
+}
+
+let {
+	tags = [],
+	categories = [],
+	sortedPosts = [],
+}: Props = $props();
 
 const params = new URLSearchParams(window.location.search);
 tags = params.has("tag") ? params.getAll("tag") : [];

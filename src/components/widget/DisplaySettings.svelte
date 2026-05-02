@@ -4,7 +4,12 @@ import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import { getDefaultHue, getHue, setHue } from "@utils/setting-utils";
 
-let props: Record<string, never> = $props();
+interface Props {
+	// Accept any props for Astro client directives
+	[key: string]: any;
+}
+
+let props: Props = $props();
 
 let hue = getHue();
 const defaultHue = getDefaultHue();
